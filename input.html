@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+  <link href="css/main.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Mental Health Input</title>
+</head>
+<body class="bg-[#FFF9F3] text-gray-800 font-sans">
+  
+  <!-- Header -->
+  <header class="flex items-center justify-between px-6 py-4 border-b border-gray-200 shadow-sm bg-white">
+    <div class="flex items-center space-x-3">
+      <img src="mental-health (1).png" alt="Logo" class="w-8 h-8"/>
+      <h1 class="text-xl font-bold text-[#B57EDC]">ClassiHealth</h1>
+    </div>
+    <a href="index.html" class="text-sm font-semibold text-[#FFA14A] hover:underline">← Back to Home</a>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-3xl mx-auto px-4 py-10">
+    <h2 class="text-2xl font-bold mb-4 text-center">Enter Your Text to Predict</h2>
+    <form id="prediction-form" class="space-y-6">
+      <textarea 
+        id="user-input" 
+        placeholder="Describe your mental state, feelings, or symptoms here..." 
+        class="w-full h-40 p-4 border border-gray-300 rounded-lg focus:ring-[#B57EDC] focus:outline-none resize-none text-gray-700"
+      ></textarea>
+
+      <div class="text-center">
+        <button 
+          type="submit" 
+          class="bg-[#FFE5C8] text-[#B57EDC] px-6 py-2 font-bold rounded-lg border border-[#B57EDC] hover:bg-[#FFD29E]">
+          Predict
+        </button>
+      </div>
+    </form>
+
+    <!-- Output Section -->
+    <section id="output-section" class="mt-10 hidden">
+      <div class="bg-white p-4 rounded-lg border border-[#B57EDC] shadow-sm">
+        <p id="prediction-result" class="text-black font-bold">...</p>
+      </div>
+      <div id="prediction-precision" class="mt-4 text-[#FFA14A] font-semibold text-lg"></div>
+      <div class="w-full bg-gray-200 rounded-full h-5 mt-2 overflow-hidden">
+      <div id="confidence-bar" class="h-5 bg-[#FFA14A] text-white text-sm font-bold text-center transition-all duration-500 ease-in-out" style="width: 0%;">
+       0%
+      </div>
+</div>
+
+    </section>
+  </main>
+
+  <!-- Optional Footer -->
+  <footer class="text-center text-sm text-black mt-10 px-4 font-bold">
+    Disclaimer: This tool is informational and does not replace professional advice.
+  </footer>
+
+<script>
+  const form = document.getElementById('prediction-form');
+  const outputSection = document.getElementById('output-section');
+  const resultText = document.getElementById('prediction-result');
+  const precisionText = document.getElementById('prediction-precision');
+  const confidenceBar = document.getElementById('confidence-bar');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = document.getElementById('user-input').value.trim();
+
+    if (!input) {
+      resultText.textContent = "Please enter some text.";
+      precisionText.textContent = "";
+      confidenceBar.style.width = "0%";
+      confidenceBar.textContent = "0%";
+      outputSection.classList.remove('hidden');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: input })
+      });
+
+      if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
+      const data = await response.json();
+
+      const maxProb = Math.max(...data.probabilities[0]);
+      const percentage = (maxProb * 100).toFixed(2);
+
+      resultText.textContent = `Predicted Class: ${data.predicted_class_name}`;
+      precisionText.textContent = `Prediction Confidence:`;
+
+      // Reveal section first
+      outputSection.classList.remove('hidden');
+
+      // Update confidence bar
+      confidenceBar.style.width = `${percentage}%`;
+      confidenceBar.textContent = `${percentage}%`;
+    } catch (error) {
+      console.error(error);
+      resultText.textContent = "Error contacting the prediction server.";
+      precisionText.textContent = "";
+      confidenceBar.style.width = "0%";
+      confidenceBar.textContent = "0%";
+      outputSection.classList.remove('hidden');
+    }
+  });
+</script>
+
+
+</body>
+</html>

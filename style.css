@@ -1,0 +1,26 @@
+
+/* Defining colors as CSS variables */
+:root {
+    --primary-color: white;    /* white */
+    --lavendar-color:#B57EDC;  /* lavendar */
+    --lightgreen-color: #96F97B;     /* light green */
+}
+
+   /* background-color: var(--lavendar-color);*/
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Ensure it's above other content */
+  background-color: rgba(255, 255, 255, 0.7); /* Optional, to add a semi-transparent background */
+  padding: 10px; /* Optional, space around the GIF */
+  border-radius: 8px; /* Optional, adds rounded corners */
+}
+
+.loader img {
+  width: 100px; /* Adjust size */
+  height: 100px; /* Adjust size */
+}
+  

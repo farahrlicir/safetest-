@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Mental Health Prediction</title>
+</head>
+
+<body class="bg-[#FFF9F3] font-sans">
+    <header>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo with App Name -->
+                <div class="flex items-center space-x-4">
+                    <img src="mental-health.png" alt="App Logo" class="h-12 w-12">
+                    <h1 class="text-2xl font-bold text-gray-900">ClassiHealth</h1>
+                </div>
+
+                <!-- Navigation Links (Hidden on small screens) -->
+                <nav class="hidden sm:flex space-x-6 text-gray-700">
+                    <a href="#" class="hover:text-gray-900 font-bold">About Us</a>
+                    <a href="#" class="bg-[#FFE5C8] px-4 py-2 rounded-lg border border-[#B57EDC] text-[#FFA14A] font-bold hover:bg-[#FFD29E]">
+                        Try It Now
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Button (Visible on small screens) -->
+                <button id="menu-button" class="sm:hidden text-gray-700 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden sm:hidden bg-[#FFF9F3] border-t border-gray-200">
+            <nav class="flex flex-col space-y-4 p-4 text-gray-700">
+                <a href="#" class="hover:text-gray-900 font-bold">About Us</a>
+                <a href="#" class="bg-[#FFE5C8] px-4 py-2 rounded-lg border border-[#B57EDC] text-[#FFA14A] font-bold hover:bg-[#FFD29E]">
+                    Try It Now
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex flex-col sm:flex-row h-screen">
+        <!-- Content Section -->
+        <div class="sm:w-1/2 flex items-center justify-center bg-white">
+            <div class="text-center px-6 sm:px-12">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">Hello! Your Mental Health Deserves Attention</h1>
+                <p class="text-gray-700 mb-6">
+                    Ready to check your mental health disorder class? <br>
+                    Get AI-powered detection of 6 common conditions in seconds.
+                </p>
+                <button class="bg-[#FFE5C8] text-[#B57EDC] px-6 py-3 border border-[#B57EDC] rounded-lg font-bold hover:bg-[#FFD29E]">
+                    Try It Now
+                </button>
+            </div>
+        </div>
+
+        <!-- Image Section -->
+        <div class="w-1/2">
+            <img src="download.gif" alt="Mental Health Animation" class="w-full h-full object-cover">
+        </div>
+    </main>
+    <script>
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+
+</html>
